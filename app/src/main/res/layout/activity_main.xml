@@ -11,7 +11,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
         android:textColor="@android:color/white"
         android:id="@+id/textView5" />
 
@@ -19,7 +18,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
         android:textColor="@android:color/white"
         android:id="@+id/textView4" />
 
@@ -72,4 +70,49 @@
         android:layout_marginLeft="10dp"
 
         android:id="@+id/textView3" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NORMAL"
+                android:onClick="onRadioButtonClicked"
+                android:textColor="@android:color/white"
+                android:paddingRight="8dp"
+                android:textSize="14dp"
+                android:id="@+id/radioButton"
+                android:checked="true" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:textSize="14dp"
+                android:text="MODO JUEGO"
+                android:paddingRight="8dp"
+                android:textColor="@android:color/white"
+                android:id="@+id/radioButton2"
+                android:layout_gravity="center_horizontal" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:layout_height="wrap_content"
+                android:text="RÁPIDA"
+                android:textSize="14dp"
+                android:paddingRight="8dp"
+                android:textColor="@android:color/white"
+                android:id="@+id/radioButton3" />
+        </RadioGroup>
+    </LinearLayout>
 </LinearLayout>

@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,8 +45,11 @@ public  class MainActivity extends ActionBarActivity implements SensorEventListe
 
 
     String prueba,cityName;
-    TextView tv,tv2,tv3,tv4,tv5;
+    TextView tv,tv2,tv3,tv4,tv5,tv6;
+    RadioButton rb1,rb2,rb3;
     ListView lv;
+
+    int precision;
 
 
     private LocationManager locationManager;
@@ -57,6 +61,13 @@ public  class MainActivity extends ActionBarActivity implements SensorEventListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        rb1=(RadioButton)findViewById(R.id.radioButton);
+        rb2=(RadioButton)findViewById(R.id.radioButton2);
+        rb3=(RadioButton)findViewById(R.id.radioButton3);
+
+        precision=3;
+
+
 
 
         locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
@@ -81,12 +92,20 @@ public  class MainActivity extends ActionBarActivity implements SensorEventListe
 
 
 
-
         tv =  (TextView)findViewById(R.id.textView);
         tv2 =  (TextView)findViewById(R.id.textView2);
         tv3 =  (TextView)findViewById(R.id.textView3);
         tv4 =  (TextView)findViewById(R.id.textView4);
         tv5 =  (TextView)findViewById(R.id.textView5);
+        tv6 =  (TextView)findViewById(R.id.textView6);
+        tv.setTextSize(15);
+        tv2.setTextSize(15);
+        tv3.setTextSize(15);
+        tv4.setTextSize(15);
+
+
+        tv4.setText("Obteniendo latitud...");
+        tv5.setText("Obteniendo longitud...");
         prueba="ght";
         sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         light = sm.getDefaultSensor(Sensor.TYPE_LIGHT);
@@ -139,6 +158,34 @@ public  class MainActivity extends ActionBarActivity implements SensorEventListe
 
 
     }
+
+    public int onRadioButtonClicked(View view)
+    {
+
+        if(rb1.isChecked())
+        {
+            precision=3;
+            Toast.makeText(this,"UD PRESIONO NORMAL",Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            if(rb2.isChecked())
+            {
+                precision=1;
+
+            }
+            else
+            {
+                precision=0;
+
+            }
+        }
+
+    return precision;
+
+
+    }
+
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -234,11 +281,13 @@ public  class MainActivity extends ActionBarActivity implements SensorEventListe
     @Override
     protected void onResume() {
         super.onResume();
-        sm.registerListener(this, light, SensorManager.SENSOR_DELAY_NORMAL);
-        sm.registerListener(this, acell, SensorManager.SENSOR_DELAY_NORMAL);
-        sm.registerListener(this, magnetic, SensorManager.SENSOR_DELAY_NORMAL);
-        sm.registerListener(this, orientation, SensorManager.SENSOR_DELAY_NORMAL);
-        sm.registerListener(this, proximity, SensorManager.SENSOR_DELAY_NORMAL);
+        View view=getLayoutInflater().inflate(R.layout.activity_main,null);
+        precision=onRadioButtonClicked(view);
+        sm.registerListener(this, light, precision);
+        sm.registerListener(this, acell, precision);
+        sm.registerListener(this, magnetic, precision);
+        sm.registerListener(this, orientation, precision);
+        sm.registerListener(this, proximity, precision);
 
         locationManager.requestLocationUpdates(provider,400,1, (LocationListener) this);
 
@@ -299,7 +348,10 @@ public  class MainActivity extends ActionBarActivity implements SensorEventListe
         tv4 =  (TextView)findViewById(R.id.textView4);
         tv5 =  (TextView)findViewById(R.id.textView5);
         tv4.setText("Latitud : "+String.valueOf(lat));
+        tv4.setTextSize(15);
+
         tv5.setText("Longitud : "+String.valueOf(lng));
+        tv5.setTextSize(15);
 
         String cityName = "";
         Geocoder gcd = new Geocoder(getBaseContext(), Locale.getDefault());
